@@ -1,15 +1,14 @@
 package com.company.currencyexchange.controller;
 
+import com.company.currencyexchange.controller.exceptions.CurrencyNotFoundException;
+import com.company.currencyexchange.controller.exceptions.NonPositiveNumberException;
+import com.company.currencyexchange.converterinterface.CurrencyConverter;
 import com.company.currencyexchange.domain.Currency;
 import com.company.currencyexchange.providers.currency.CurrenciesProvider;
-import com.company.currencyexchange.controller.exceptions.NonPositiveNumberException;
-import com.company.currencyexchange.controller.exceptions.CurrencyNotFoundException;
 import com.company.currencyexchange.view.CurrencyExchangeViewer;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
@@ -17,7 +16,7 @@ import org.xml.sax.SAXException;
 import lombok.extern.java.Log;
 
 @Log
-public class CurrencyExchangeController implements ActionListener {
+public class CurrencyExchangeController implements CurrencyConverter {
     private final CurrenciesProvider currenciesProvider;
     private final CurrencyExchangeViewer currencyExchangeViewer;
 
@@ -38,7 +37,8 @@ public class CurrencyExchangeController implements ActionListener {
         }
     }
 
-    private void convertCurrencies(final String in, final String out, final String value) throws ParserConfigurationException, SAXException, IOException {
+    @Override
+    public void convertCurrencies(final String in, final String out, final String value) throws ParserConfigurationException, SAXException, IOException {
         Currency currencyIn = currenciesProvider.getCurrency(in);
         Currency currencyOut = currenciesProvider.getCurrency(out);
 
