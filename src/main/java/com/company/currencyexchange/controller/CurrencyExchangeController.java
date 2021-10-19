@@ -8,7 +8,10 @@ import com.company.currencyexchange.providers.currency.CurrenciesProvider;
 import com.company.currencyexchange.view.CurrencyExchangeViewer;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
@@ -16,7 +19,7 @@ import org.xml.sax.SAXException;
 import lombok.extern.java.Log;
 
 @Log
-public class CurrencyExchangeController implements CurrencyConverter {
+public class CurrencyExchangeController implements CurrencyConverter, ActionListener {
     private final CurrenciesProvider currenciesProvider;
     private final CurrencyExchangeViewer currencyExchangeViewer;
 
@@ -31,9 +34,11 @@ public class CurrencyExchangeController implements CurrencyConverter {
         try {
             convertCurrencies(currencyExchangeViewer.getCurrencyIn(), currencyExchangeViewer.getCurrencyOut(), currencyExchangeViewer.getValue());
         } catch (CurrencyNotFoundException currencyNotFoundException) {
+            log("Currency not found");
             log.warning("Currency not found");
         } catch (ParserConfigurationException | IOException | SAXException parserConfigurationException) {
-            parserConfigurationException.printStackTrace();
+            log("Parsing file failed");
+            log.warning("Parsing file failed");
         }
     }
 
@@ -48,7 +53,7 @@ public class CurrencyExchangeController implements CurrencyConverter {
         currencyExchangeViewer.setTextFieldOut(String.valueOf(Math.round(convertedCurrency * 100) / 100.0));
     }
 
-    private double validateValue(String value) {
+    private double validateValue(final String value) {
         double parsed = 0.0;
         try {
             if (value == null || value.isBlank()) {
@@ -61,11 +66,17 @@ public class CurrencyExchangeController implements CurrencyConverter {
                 throw new NonPositiveNumberException("Number have to be positive");
             }
         } catch (NumberFormatException numberFormatException) {
+            log("Wrong value entered");
             log.warning("Wrong value entered");
         } catch (NonPositiveNumberException nonPositiveNumberException) {
+            log("Number have to be positive");
             log.warning("Number have to be positive");
         }
 
         return parsed;
+    }
+
+    private void log(final String message) {
+        currencyExchangeViewer.updateLogs(LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) + " " + message);
     }
 }

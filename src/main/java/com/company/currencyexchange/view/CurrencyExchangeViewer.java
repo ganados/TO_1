@@ -2,6 +2,7 @@ package com.company.currencyexchange.view;
 
 import com.company.currencyexchange.domain.Currencies;
 
+import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
@@ -11,6 +12,7 @@ public class CurrencyExchangeViewer {
     private final JButton jButton;
     private JTextField jTextFieldIn;
     private JTextField jTextFieldOut;
+    private JTextArea logs;
     private JComboBox jComboBoxIn;
     private JComboBox jComboBoxOut;
 
@@ -19,6 +21,7 @@ public class CurrencyExchangeViewer {
         jButton = new JButton("Convert");
         jTextFieldOut = new JTextField("result here");
         jTextFieldIn = new JTextField();
+        logs = new JTextArea();
     }
 
     public void createGUI(final Currencies currencies) {
@@ -34,6 +37,8 @@ public class CurrencyExchangeViewer {
         jTextFieldIn.setBounds(150, 100, 100, 30);
         jTextFieldOut.setEditable(false);
         jTextFieldOut.setBounds(300, 100, 100, 30);
+        logs.setBounds(300, 150, 400, 18);
+        logs.setEditable(false);
 
 
         jButton.setBounds(50, 150, 100, 30);
@@ -47,6 +52,7 @@ public class CurrencyExchangeViewer {
 
         jFrame.add(jTextFieldIn);
         jFrame.add(jTextFieldOut);
+        jFrame.add(logs);
 
         jFrame.add(jButton);
 
@@ -62,6 +68,11 @@ public class CurrencyExchangeViewer {
 
     public void setTextFieldOut(final String out) {
         jTextFieldOut.setText(out);
+    }
+
+    public void updateLogs(String message) {
+//        String actualValue = logs.getText();
+        logs.setText(String.format("%s\n",  message));
     }
 
     public String getCurrencyIn() {
