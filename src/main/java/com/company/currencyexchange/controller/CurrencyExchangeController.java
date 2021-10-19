@@ -8,7 +8,6 @@ import com.company.currencyexchange.providers.currency.CurrenciesProvider;
 import com.company.currencyexchange.view.CurrencyExchangeViewer;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,14 +18,14 @@ import org.xml.sax.SAXException;
 import lombok.extern.java.Log;
 
 @Log
-public class CurrencyExchangeController implements CurrencyConverter, ActionListener {
+public class CurrencyExchangeController implements CurrencyConverter {
     private final CurrenciesProvider currenciesProvider;
     private final CurrencyExchangeViewer currencyExchangeViewer;
 
     public CurrencyExchangeController(final CurrenciesProvider currenciesProvider, final CurrencyExchangeViewer currencyExchangeViewer) {
         this.currenciesProvider = currenciesProvider;
         this.currencyExchangeViewer = currencyExchangeViewer;
-        currencyExchangeViewer.addActionListener(this);
+        currencyExchangeViewer.addActionListener(this::actionPerformed);
     }
 
     @Override

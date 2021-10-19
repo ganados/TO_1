@@ -1,9 +1,9 @@
 package com.company.currencyexchange.providers.currency;
 
+import com.company.currencyexchange.controller.exceptions.CurrencyNotFoundException;
 import com.company.currencyexchange.domain.Currencies;
 import com.company.currencyexchange.domain.Currency;
 import com.company.currencyexchange.providers.remote.RemoteProvider;
-import com.company.currencyexchange.controller.exceptions.CurrencyNotFoundException;
 
 import java.io.IOException;
 import java.util.HashMap;
