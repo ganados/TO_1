@@ -4,7 +4,7 @@ import com.company.currencyexchange.controller.exceptions.CurrencyNotFoundExcept
 import com.company.currencyexchange.controller.exceptions.NonPositiveNumberException;
 import com.company.currencyexchange.converterinterface.CurrencyConverter;
 import com.company.currencyexchange.domain.Currency;
-import com.company.currencyexchange.providers.currency.CurrenciesProvider;
+import com.company.currencyexchange.providers.currency.CurrenciesAccessor;
 import com.company.currencyexchange.view.CurrencyExchangeViewer;
 
 import java.awt.event.ActionEvent;
@@ -19,13 +19,13 @@ import lombok.extern.java.Log;
 
 @Log
 public class CurrencyExchangeController implements CurrencyConverter {
-    private final CurrenciesProvider currenciesProvider;
+    private final CurrenciesAccessor currenciesAccessor;
     private final CurrencyExchangeViewer currencyExchangeViewer;
 
-    public CurrencyExchangeController(final CurrenciesProvider currenciesProvider, final CurrencyExchangeViewer currencyExchangeViewer) {
-        this.currenciesProvider = currenciesProvider;
+    public CurrencyExchangeController(final CurrenciesAccessor currenciesAccessor, final CurrencyExchangeViewer currencyExchangeViewer) {
+        this.currenciesAccessor = currenciesAccessor;
         this.currencyExchangeViewer = currencyExchangeViewer;
-        currencyExchangeViewer.addActionListener(this::actionPerformed);
+        currencyExchangeViewer.addActionListener(this);
     }
 
     @Override
@@ -43,8 +43,8 @@ public class CurrencyExchangeController implements CurrencyConverter {
 
     @Override
     public void convertCurrencies(final String in, final String out, final String value) throws ParserConfigurationException, SAXException, IOException {
-        Currency currencyIn = currenciesProvider.getCurrency(in);
-        Currency currencyOut = currenciesProvider.getCurrency(out);
+        Currency currencyIn = currenciesAccessor.getCurrency(in);
+        Currency currencyOut = currenciesAccessor.getCurrency(out);
 
         double parsedValue = validateValue(value);
 

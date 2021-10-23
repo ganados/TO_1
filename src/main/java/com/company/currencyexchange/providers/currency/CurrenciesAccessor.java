@@ -25,7 +25,7 @@ import lombok.extern.java.Log;
 @Log
 @Setter
 @Getter
-public class CurrenciesProvider {
+public class CurrenciesAccessor {
     private static final String LIST_POSITION = "pozycja";
     private static final String CURRENCY_NAME = "nazwa_waluty";
     private static final String CURRENCY_CONVERTER = "przelicznik";
