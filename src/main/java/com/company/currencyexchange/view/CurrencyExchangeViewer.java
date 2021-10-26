@@ -75,7 +75,6 @@ public class CurrencyExchangeViewer {
     }
 
     public void updateLogs(String message) {
-//        String actualValue = logs.getText();
         logs.setText(String.format("%s\n", message));
     }
 

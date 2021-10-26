@@ -1,5 +1,6 @@
 package com.company.currencyexchange;
 
+import com.company.currencyexchange.converter.Converter;
 import com.company.currencyexchange.domain.Currencies;
 import com.company.currencyexchange.providers.currency.CurrenciesAccessor;
 import com.company.currencyexchange.controller.CurrencyExchangeController;
@@ -16,7 +17,8 @@ public class App {
         CurrenciesAccessor currenciesAccessor = new CurrenciesAccessor();
         Currencies currencies = currenciesAccessor.createCurrencies();
         CurrencyExchangeViewer currencyExchangeViewer = new CurrencyExchangeViewer();
-        CurrencyExchangeController currencyExchangeController = new CurrencyExchangeController(currenciesAccessor, currencyExchangeViewer);
+        Converter converter = new Converter();
+        CurrencyExchangeController currencyExchangeController = new CurrencyExchangeController(currenciesAccessor, currencyExchangeViewer, converter);
 
         currencyExchangeViewer.createGUI(currencies);
     }

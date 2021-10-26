@@ -1,13 +1,14 @@
 package com.company.currencyexchange.converterinterface;
 
-import java.awt.event.ActionListener;
+import com.company.currencyexchange.domain.Currency;
+
 import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
-public interface CurrencyConverter extends ActionListener {
+public interface CurrencyConverter {
 
-    void convertCurrencies(final String in, final String out, final String value) throws ParserConfigurationException, SAXException, IOException;
+    double convertCurrencies(final Currency currencyIn, final Currency currencyOut, final String value) throws ParserConfigurationException, SAXException, IOException;
 
 }
